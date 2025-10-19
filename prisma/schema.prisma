@@ -1,0 +1,19 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GasExchange {
+  id               Int      @id @default(autoincrement())
+  data             DateTime @default(now())
+  quantidade       Int
+  preco_unitario   Float
+  local_compra     String
+  telefone_contato String
+  observacao       String?
+  custo_total      Float    @default(0)
+}
