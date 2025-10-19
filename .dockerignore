@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.github
+pnpm-debug.log
+*.tgz
+docker-compose.yml
+.env
+dev.db
+prisma/dev.db
+README.md

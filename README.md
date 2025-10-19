@@ -125,6 +125,36 @@ O datasource atual está configurado para SQLite (`file:./dev.db`). Se quiser us
 - Para editar ou adicionar rotas veja `src/routes`.
 - O Prisma Client é instanciado em `src/server.ts` e exportado como `prisma`.
 
+## Docker
+
+Existem instruções e arquivos para criar uma imagem Docker multi-stage otimizada e um `docker-compose.yml` para desenvolvimento.
+
+1) Build da imagem (produção):
+
+```bash
+docker build -t house-api:latest .
+```
+
+2) Rodar a imagem:
+
+```bash
+docker run --rm -p 3333:3333 \
+	-v $(pwd)/prisma:/app/prisma \
+	-e NODE_ENV=production \
+	house-api:latest
+```
+
+3) Desenvolvimento com docker-compose (usa `pnpm dev`):
+
+```bash
+docker compose up --build
+```
+
+Observações:
+- O `Dockerfile` usa um build multi-stage: compila TypeScript para `dist` e copia `prisma` para a imagem final.
+- Se você usa SQLite (padrão), o arquivo do banco pode ser mapeado como volume (`./prisma` no `docker-compose.yml`) para persistência.
+- Se preferir usar Postgres ou outro banco, configure `DATABASE_URL` via variáveis de ambiente e ajuste `prisma/schema.prisma`.
+
 ## Contribuição
 
 Pull requests são bem-vindos. Para mudanças no schema do Prisma, crie uma migração e execute os testes locais antes de abrir PR.
